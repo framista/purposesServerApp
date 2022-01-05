@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
+const users = require('./routes/users');
+
 const connectionMongo = `mongodb+srv://framista:${process.env.MONGO_PASSWORD}@cluster0.ot39a.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 
 mongoose
@@ -23,6 +25,8 @@ app.use(
 );
 app.use(bodyParser.json());
 app.use(cors());
+
+app.use('/api/users', users);
 
 const PORT = process.env.PORT || 5000;
 

@@ -1,0 +1,9 @@
+###
+POST http://localhost:5000/api/users
+content-type: application/json
+
+{
+    "email": "test@test.pl",
+    "name": "Testowe",
+    "user_id": "asdfg1234"
+} 
