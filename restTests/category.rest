@@ -1,0 +1,34 @@
+### create category without x-user-id
+POST http://localhost:5000/api/categories
+content-type: application/json
+
+{
+    "name": "Programming",
+    "description": "Learning TS and React",
+    "color": "#444",
+    "points": 40
+}
+
+### create category with random x-user-id
+POST http://localhost:5000/api/categories
+content-type: application/json
+x-user-id: asdfg123423
+
+{
+    "name": "Programming",
+    "description": "Learning TS and React",
+    "color": "#444",
+    "points": 40
+}
+
+### create category with correct x-user-id
+POST http://localhost:5000/api/categories
+content-type: application/json
+x-user-id: asdfg1234
+
+{
+    "name": "Programming",
+    "description": "Learning TS and React",
+    "color": "#444",
+    "points": 40
+}
