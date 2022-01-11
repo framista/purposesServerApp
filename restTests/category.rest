@@ -32,3 +32,8 @@ x-user-id: asdfg1234
     "color": "#444",
     "points": 40
 }
+
+### get user categories asdfg1234
+GET http://localhost:5000/api/categories
+content-type: application/json
+x-user-id: asdfg1234
