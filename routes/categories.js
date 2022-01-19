@@ -28,4 +28,16 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
+router.put('/:id', async (req, res) => {
+  try {
+    const category = await Category.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    if (!category) return res.status(404).send('The category was not found');
+    res.send(category);
+  } catch (err) {
+    return res.status(404).send('Unexpected error');
+  }
+});
+
 module.exports = router;
