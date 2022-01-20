@@ -2,6 +2,11 @@ const express = require('express');
 const router = express.Router();
 const { Category } = require('../models/category');
 const auth = require('../middlewares/auth');
+const { getCategorySummary } = require('./statistics.helpers');
+const {
+  getFirstDayOfCurrentWeek,
+  getLastDayOfCurrentWeek,
+} = require('../utils/dateHelpers');
 
 router.post('/', auth, async (req, res) => {
   const { user_id } = req;
@@ -22,8 +27,18 @@ router.get('/', auth, async (req, res) => {
       .sort({
         name: 1,
       });
-    res.send(categories);
+    const pointsSummary = await getCategorySummary(
+      user_id,
+      getFirstDayOfCurrentWeek(),
+      getLastDayOfCurrentWeek()
+    );
+    const pointsObj = pointsSummary.reduce(
+      (prev, data) => ({ ...prev, [data._id]: data.totalCategoryPoints }),
+      {}
+    );
+    res.send({categories, pointsObj});
   } catch (err) {
+    console.log(err);
     return res.status(400).send('Unexpected error');
   }
 });
