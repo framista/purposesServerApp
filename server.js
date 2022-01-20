@@ -8,6 +8,7 @@ const users = require('./routes/users');
 const categories = require('./routes/categories');
 const tasks = require('./routes/tasks');
 const activities = require('./routes/activities');
+const statistics = require('./routes/statistics');
 
 const connectionMongo = `mongodb+srv://framista:${process.env.MONGO_PASSWORD}@cluster0.ot39a.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 
@@ -33,6 +34,7 @@ app.use('/api/users', users);
 app.use('/api/categories', categories);
 app.use('/api/tasks', tasks);
 app.use('/api/activities', activities);
+app.use('/api/statistics', statistics);
 
 const PORT = process.env.PORT || 5000;
 
