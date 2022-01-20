@@ -1,7 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middlewares/auth');
-const { getDailyPoints, getCategorySummary } = require('./statistics.helpers');
+const {
+  getDailyPoints,
+  getCategorySummary,
+  getDatesForCategories,
+} = require('./statistics.helpers');
 
 router.get('/', auth, async (req, res) => {
   const { user_id } = req;
@@ -13,7 +17,12 @@ router.get('/', auth, async (req, res) => {
       startDate,
       endDate
     );
-    res.send({ dailyPoints, categorySummary });
+    const datesForCategories = await getDatesForCategories(
+      user_id,
+      startDate,
+      endDate
+    );
+    res.send({ dailyPoints, categorySummary, datesForCategories });
   } catch (err) {
     console.log(err);
     return res.status(400).send('Unexpected error');

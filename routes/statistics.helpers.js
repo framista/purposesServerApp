@@ -45,4 +45,25 @@ const getCategorySummary = async (user_id, startDate, endDate) =>
     },
   ]);
 
-module.exports = { getDailyPoints, getCategorySummary };
+const getDatesForCategories = async (user_id, startDate, endDate) =>
+  await Activity.aggregate([
+    {
+      $match: {
+        date: {
+          $gte: new Date(`${startDate}T00:00:00Z`),
+          $lte: new Date(`${endDate}T23:59:59Z`),
+        },
+        user_id,
+      },
+    },
+    {
+      $group: {
+        _id: '$category_id',
+        dates: {
+          $addToSet: { $dateToString: { format: '%Y-%m-%d', date: '$date' } },
+        },
+      },
+    },
+  ]);
+
+module.exports = { getDailyPoints, getCategorySummary, getDatesForCategories };
