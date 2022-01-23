@@ -14,6 +14,18 @@ router.post('/', auth, async (req, res) => {
   }
 });
 
+router.put('/:id', async (req, res) => {
+  try {
+    const activity = await Activity.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    if (!activity) return res.status(404).send('The activity was not found');
+    res.send(activity);
+  } catch (err) {
+    return res.status(404).send('Unexpected error');
+  }
+});
+
 router.get('/', auth, async (req, res) => {
   const { user_id } = req;
   const { startDate, endDate } = req.query;
