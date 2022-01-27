@@ -14,6 +14,18 @@ router.post('/', auth, async (req, res) => {
   }
 });
 
+router.put('/:id', async (req, res) => {
+  try {
+    const task = await Task.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    if (!task) return res.status(404).send('The task was not found');
+    res.send(task);
+  } catch (err) {
+    return res.status(404).send('Unexpected error');
+  }
+});
+
 router.get('/', auth, async (req, res) => {
   const { user_id } = req;
   try {
