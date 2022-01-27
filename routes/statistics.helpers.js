@@ -13,7 +13,10 @@ const getDailyPoints = async (user_id, startDate, endDate) =>
     },
     {
       $group: {
-        _id: { $dateToString: { format: '%Y-%m-%d', date: '$date' } },
+        _id: {
+          categoryId: '$category_id',
+          dateToString: { format: '%Y-%m-%d', date: '$date' },
+        },
         totalDailyPoints: {
           $sum: '$points',
         },
