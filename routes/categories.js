@@ -36,7 +36,7 @@ router.get('/', auth, async (req, res) => {
       (prev, data) => ({ ...prev, [data._id]: data.totalCategoryPoints }),
       {}
     );
-    res.send({categories, pointsObj});
+    res.send({ categories, pointsObj });
   } catch (err) {
     console.log(err);
     return res.status(400).send('Unexpected error');

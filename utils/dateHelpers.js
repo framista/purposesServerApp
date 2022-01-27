@@ -1,18 +1,25 @@
-const formatDate = (date) => new Date(date).toISOString().slice(0, 10);
+const formatNumber = (number) => (number < 9 ? `0${number}` : number);
+
+const formatDate = (date) => {
+  const newDate = new Date(date);
+  const year = newDate.getFullYear();
+  const month = newDate.getMonth() + 1;
+  const day = newDate.getDate();
+  return `${year}-${formatNumber(month)}-${formatNumber(day)}`;
+};
 
 const getFirstDayOfCurrentWeek = () => {
-  const curr = new Date();
-  const first = curr.getDate() - curr.getDay();
-  const firstday = new Date(curr.setDate(first)).toUTCString();
-  return formatDate(firstday);
+  const d = new Date();
+  d.setUTCHours(12, 0, 0, 0);
+  const day = d.getDay();
+  const diff = d.getDate() - day + (day == 0 ? -6 : 1);
+  return formatDate(new Date(d.setDate(diff)));
 };
 
 const getLastDayOfCurrentWeek = () => {
-  const curr = new Date();
-  const first = curr.getDate() - curr.getDay();
-  const last = first + 6;
-  const lastday = new Date(curr.setDate(last)).toUTCString();
-  return formatDate(lastday);
+  const date = new Date(getFirstDayOfCurrentWeek());
+  date.setDate(date.getDate() + 6);
+  return formatDate(date);
 };
 
 module.exports = { getFirstDayOfCurrentWeek, getLastDayOfCurrentWeek };
